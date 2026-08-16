@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../includes/db.php';
+include 'includes/db.php';
 
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
