@@ -71,4 +71,5 @@ $pageSlug = strtolower(str_replace(' ', '-', $pageTitle));
                 </a>
             </div>
         </header>
-        <main class="content">
+        <main class="main-content">
+            <div class="content">
