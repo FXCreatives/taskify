@@ -51,17 +51,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <header>
         <div class="header-content">
-            <div class="logo">⚡ Taskify</div>
+            <a href="index.php" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+                Taskify
+            </a>
             <nav>
                 <a href="index.php">Dashboard</a>
                 <a href="add-task.php">Add Task</a>
                 <a href="view-tasks.php">View Tasks</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                </button>
             </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+            <a href="index.php">Dashboard</a>
+            <a href="add-task.php">Add Task</a>
+            <a href="view-tasks.php">View Tasks</a>
         </div>
     </header>
 
     <div class="container">
-        <h1 class="page-title">✏️ Edit Task</h1>
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Edit Task</h1>
+                <p class="page-subtitle">Update task details and status</p>
+            </div>
+        </div>
 
         <?php if (!empty($error)) echo "<div class='alert alert-error'>$error</div>"; ?>
         <?php if (!empty($success)) echo "<div class='alert alert-success'>$success</div>"; ?>
@@ -69,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-container">
             <form method="POST" action="">
                 <div class="form-group">
-                    <label for="title">Task Title *</label>
+                    <label for="title">Task Title <span class="required">*</span></label>
                     <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($task['title']); ?>" required>
                 </div>
 
@@ -101,13 +126,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="form-group">
-                    <label for="due_date">Due Date *</label>
+                    <label for="due_date">Due Date <span class="required">*</span></label>
                     <input type="date" id="due_date" name="due_date" value="<?php echo $task['due_date']; ?>" required>
                 </div>
 
-                <div style="display: flex; gap: 10px;">
+                <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Update Task</button>
-                    <a href="view-tasks.php" class="btn btn-danger">Cancel</a>
+                    <a href="view-tasks.php" class="btn btn-ghost">Cancel</a>
                 </div>
             </form>
         </div>

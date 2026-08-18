@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('searchInput');
     const filterSelect = document.getElementById('filterSelect');
     const taskTable = document.getElementById('taskTable');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
 
     function filterTasks() {
         const searchTerm = searchInput.value.toLowerCase();
@@ -22,6 +24,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (searchInput) searchInput.addEventListener('input', filterTasks);
     if (filterSelect) filterSelect.addEventListener('change', filterTasks);
+
+    if (mobileMenuBtn && mobileNav) {
+        mobileMenuBtn.addEventListener('click', function () {
+            mobileNav.classList.toggle('show');
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!mobileMenuBtn.contains(e.target) && !mobileNav.contains(e.target)) {
+                mobileNav.classList.remove('show');
+            }
+        });
+    }
 
     setTimeout(() => {
         const toasts = document.querySelectorAll('.toast');
