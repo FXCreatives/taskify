@@ -1,5 +1,4 @@
-/* ============================================================
-   TASKIFY DESIGN SYSTEM
+/* =====================================================   TASKIFY DESIGN SYSTEM
    ============================================================ */
 
 :root {
@@ -77,8 +76,7 @@
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
 }
 
-/* ============================================================
-   DARK MODE
+/* =====================================================   DARK MODE
    ============================================================ */
 
 body.dark-mode {
@@ -123,8 +121,7 @@ body.dark-mode {
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
 }
 
-/* ============================================================
-   RESET & BASE
+/* =====================================================   RESET & BASE
    ============================================================ */
 
 *, *::before, *::after {
@@ -170,8 +167,7 @@ input, select, textarea {
     color: var(--primary);
 }
 
-/* ============================================================
-   APP LAYOUT — Sidebar + Main
+/* =====================================================   APP LAYOUT — Sidebar + Main
    ============================================================ */
 
 .app {
@@ -289,6 +285,11 @@ input, select, textarea {
     flex-shrink: 0;
 }
 
+.sidebar-lower-nav {
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-4);
+}
+
 .sidebar-footer {
     padding: var(--space-4);
     border-top: 1px solid var(--border);
@@ -299,8 +300,8 @@ input, select, textarea {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px 12px;
+    justify-content: center;
+    padding: 10px;
     background: var(--surface-2);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
@@ -439,8 +440,7 @@ body.dark-mode .theme-toggle .toggle-thumb {
     opacity: 1;
 }
 
-/* ============================================================
-   PAGE HEADER
+/* =====================================================   PAGE HEADER
    ============================================================ */
 
 .page-header {
@@ -467,8 +467,7 @@ body.dark-mode .theme-toggle .toggle-thumb {
     font-weight: 400;
 }
 
-/* ============================================================
-   BUTTONS
+/* =====================================================   BUTTONS
    ============================================================ */
 
 .btn {
@@ -476,9 +475,10 @@ body.dark-mode .theme-toggle .toggle-thumb {
     align-items: center;
     justify-content: center;
     gap: 6px;
+    height: 40px;
     padding: 9px 16px;
     border: 1px solid transparent;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius);
     font-size: 0.875rem;
     font-weight: 600;
     text-decoration: none;
@@ -546,9 +546,10 @@ body.dark-mode .theme-toggle .toggle-thumb {
 }
 
 .btn-sm {
+    height: auto;
     padding: 6px 12px;
     font-size: 0.8rem;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius);
 }
 
 .btn-block {
@@ -560,7 +561,7 @@ body.dark-mode .theme-toggle .toggle-thumb {
     width: 36px;
     height: 36px;
     padding: 0;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius);
     background: var(--surface-2);
     border: 1px solid var(--border);
     color: var(--text-secondary);
@@ -575,8 +576,7 @@ body.dark-mode .theme-toggle .toggle-thumb {
     color: var(--text);
 }
 
-/* ============================================================
-   STAT CARDS
+/* =====================================================   STAT CARDS
    ============================================================ */
 
 .cards {
@@ -648,8 +648,7 @@ body.dark-mode .theme-toggle .toggle-thumb {
     margin-top: var(--space-2);
 }
 
-/* ============================================================
-   PROGRESS SECTION
+/* =====================================================   PROGRESS SECTION
    ============================================================ */
 
 .progress-section {
@@ -741,14 +740,13 @@ body.dark-mode .theme-toggle .toggle-thumb {
     color: var(--text);
 }
 
-/* ============================================================
-   TABLE / TASK LIST
+/* =====================================================   TABLE / TASK LIST
    ============================================================ */
 
 .panel {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-xs);
 }
@@ -925,8 +923,7 @@ table tbody tr:last-child td {
     white-space: nowrap;
 }
 
-/* ============================================================
-   BADGES
+/* =====================================================   BADGES
    ============================================================ */
 
 .badge {
@@ -934,7 +931,7 @@ table tbody tr:last-child td {
     align-items: center;
     gap: 5px;
     padding: 3px 10px;
-    border-radius: 999px;
+    border-radius: var(--radius);
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.01em;
@@ -951,18 +948,18 @@ table tbody tr:last-child td {
 
 /* Status badges */
 .badge-pending {
-    background: var(--warning-light);
-    color: var(--warning-text);
-    border: 1px solid var(--warning-border);
+    background: var(--surface-2);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
 }
-.badge-pending::before { background: var(--warning); }
+.badge-pending::before { background: var(--text-subtle); }
 
 .badge-in-progress {
-    background: var(--info-light);
-    color: var(--info-text);
-    border: 1px solid var(--info-border);
+    background: var(--primary-light);
+    color: var(--primary);
+    border: 1px solid var(--primary-lighter);
 }
-.badge-in-progress::before { background: var(--info); }
+.badge-in-progress::before { background: var(--primary); }
 
 .badge-completed {
     background: var(--success-light);
@@ -974,7 +971,7 @@ table tbody tr:last-child td {
 /* Priority badges */
 .badge-low {
     background: var(--surface-2);
-    color: var(--text-secondary);
+    color: var(--text-muted);
     border: 1px solid var(--border);
 }
 .badge-low::before { background: var(--text-subtle); }
@@ -993,8 +990,7 @@ table tbody tr:last-child td {
 }
 .badge-high::before { background: var(--danger); }
 
-/* ============================================================
-   EMPTY STATE
+/* =====================================================   EMPTY STATE
    ============================================================ */
 
 .empty-state {
@@ -1024,8 +1020,34 @@ table tbody tr:last-child td {
     margin-bottom: var(--space-5);
 }
 
-/* ============================================================
-   FORMS
+.empty-state-icon-container {
+    display: inline-flex;
+    height: 44px;
+    width: 44px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text-muted);
+    margin-bottom: var(--space-4);
+}
+
+.avatar {
+    height: 36px;
+    width: 36px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =====================================================   FORMS
    ============================================================ */
 
 .form-container {
@@ -1061,11 +1083,21 @@ table tbody tr:last-child td {
     width: 100%;
     padding: 10px 14px;
     border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius);
     font-size: 0.9rem;
     background: var(--surface);
     color: var(--text);
     transition: all var(--transition);
+}
+
+.form-group input,
+.form-group select {
+    height: 40px;
+}
+
+.form-group textarea {
+    min-height: 110px;
+    resize: vertical;
 }
 
 .form-group input::placeholder,
@@ -1085,12 +1117,6 @@ table tbody tr:last-child td {
 .form-group select:hover,
 .form-group textarea:hover {
     border-color: var(--text-subtle);
-}
-
-.form-group textarea {
-    resize: vertical;
-    min-height: 110px;
-    line-height: 1.6;
 }
 
 .form-group select {
@@ -1123,8 +1149,7 @@ table tbody tr:last-child td {
     border-top: 1px solid var(--border-light);
 }
 
-/* ============================================================
-   ALERTS
+/* =====================================================   ALERTS
    ============================================================ */
 
 .alert {
@@ -1156,8 +1181,7 @@ table tbody tr:last-child td {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ============================================================
-   TOAST
+/* =====================================================   TOAST
    ============================================================ */
 
 .toast {
@@ -1190,8 +1214,7 @@ table tbody tr:last-child td {
 .toast.error { background: var(--danger); }
 .toast.info { background: var(--primary); }
 
-/* ============================================================
-   DELETE CONFIRMATION
+/* =====================================================   DELETE CONFIRMATION
    ============================================================ */
 
 .delete-card {
@@ -1202,11 +1225,11 @@ table tbody tr:last-child td {
 }
 
 .delete-card-icon {
-    width: 56px;
-    height: 56px;
+    width: 44px;
+    height: 44px;
     background: var(--danger-light);
     border: 1px solid var(--danger-border);
-    border-radius: 50%;
+    border-radius: var(--radius);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1242,8 +1265,7 @@ table tbody tr:last-child td {
     margin: 0;
 }
 
-/* ============================================================
-   ANIMATIONS
+/* =====================================================   ANIMATIONS
    ============================================================ */
 
 @keyframes fadeInUp {
@@ -1268,9 +1290,8 @@ table tbody tr:last-child td {
     }
 }
 
-/* ============================================================
-   FOCUS STATES
-   ============================================================ */
+/* =====================================================   FOCUS STATES
+    ============================================================ */
 
 :focus-visible {
     outline: 2px solid var(--primary);
@@ -1281,13 +1302,24 @@ table tbody tr:last-child td {
 .nav-item:focus-visible,
 .theme-toggle:focus-visible,
 .search-input:focus-visible,
-.filter-select:focus-visible {
+.filter-select:focus-visible,
+.btn-icon:focus-visible,
+.avatar:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
 }
 
-/* ============================================================
-   RESPONSIVE — Tablet
+.hidden { display: none; }
+
+@media (min-width: 640px) {
+    .sm\:inline-flex { display: inline-flex; }
+}
+
+@media (min-width: 1024px) {
+    .lg\:table-cell { display: table-cell; }
+}
+
+/* =====================================================   RESPONSIVE — Tablet
    ============================================================ */
 
 @media (max-width: 1024px) {
@@ -1304,8 +1336,7 @@ table tbody tr:last-child td {
     }
 }
 
-/* ============================================================
-   RESPONSIVE — Mobile
+/* =====================================================   RESPONSIVE — Mobile
    ============================================================ */
 
 @media (max-width: 768px) {

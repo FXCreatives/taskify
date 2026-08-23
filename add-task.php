@@ -42,11 +42,13 @@ include 'includes/header.php';
         <div class="form-group">
             <label for="title">Task Title <span class="required">*</span></label>
             <input type="text" id="title" name="title" placeholder="e.g. Prepare quarterly report" required>
+            <p class="form-hint">Keep it short and action oriented.</p>
         </div>
 
         <div class="form-group">
             <label for="description">Description</label>
             <textarea id="description" name="description" placeholder="Add details about this task (optional)"></textarea>
+            <p class="form-hint">Optional. Supports plain text.</p>
         </div>
 
         <div class="form-row">
