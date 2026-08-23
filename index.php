@@ -127,20 +127,20 @@ $inProgress = $pdo->query("SELECT COUNT(*) FROM tasks WHERE status = 'In Progres
                 <?php
                 $stmt = $pdo->query("SELECT * FROM tasks ORDER BY created_at DESC LIMIT 10");
                 $tasks = $stmt->fetchAll();
-                if (count($tasks) > 0) {
-                    foreach ($tasks as $task) {
-                        echo "<tr>";
-                        echo "<td class='cell-id'>#{$task['id']}</td>";
-                        echo "<td class='cell-title'>" . htmlspecialchars($task['title']) . "</td>";
-                        echo "<td><span class='badge badge-" . strtolower($task['priority']) . "'>{$task['priority']}</span></td>";
-                        echo "<td class='cell-date'>{$task['due_date']}</td>";
-                        echo "<td><span class='badge badge-" . strtolower(str_replace(' ', '-', $task['status'])) . "'>{$task['status']}</span></td>";
-                        echo "<td class='actions'>
-                                <a href='edit-task.php?id={$task['id']}' class='btn btn-ghost btn-sm'>Edit</a>
-                                <a href='delete-task.php?id={$task['id']}' class='btn btn-danger btn-sm btn-confirm-delete'>Delete</a>
-                              </td>";
-                        echo "</tr>";
-                    }
+                    if (count($tasks) > 0) {
+                        foreach ($tasks as $task) {
+                            echo "<tr>";
+                            echo "<td class='cell-id' data-label='ID'>#{$task['id']}</td>";
+                            echo "<td class='cell-title' data-label='Title'>" . htmlspecialchars($task['title']) . "</td>";
+                            echo "<td data-label='Priority'><span class='badge badge-" . strtolower($task['priority']) . "'>{$task['priority']}</span></td>";
+                            echo "<td class='cell-date' data-label='Due Date'>{$task['due_date']}</td>";
+                            echo "<td data-label='Status'><span class='badge badge-" . strtolower(str_replace(' ', '-', $task['status'])) . "'>{$task['status']}</span></td>";
+                            echo "<td class='actions' data-label='Actions'>
+                                    <a href='edit-task.php?id={$task['id']}' class='btn btn-ghost btn-sm'>Edit</a>
+                                    <a href='delete-task.php?id={$task['id']}' class='btn btn-danger btn-sm btn-confirm-delete'>Delete</a>
+                                  </td>";
+                            echo "</tr>";
+                        }
                 } else {
                     echo "<tr><td colspan='6' class='empty-state'>
                             <svg class='empty-state-icon' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='1.5'><path stroke-linecap='round' stroke-linejoin='round' d='M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2'/></svg>

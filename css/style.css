@@ -1384,15 +1384,81 @@ table tbody tr:last-child td {
         flex: 1;
     }
 
-    table {
-        display: block;
-        overflow-x: auto;
+    /* Mobile task cards — replace table scroll with stacked cards */
+    .table-wrap {
+        overflow: visible;
     }
 
+    table,
+    table thead,
+    table tbody,
     table th,
+    table tr,
     table td {
-        padding: 12px var(--space-4);
-        font-size: 0.82rem;
+        display: block;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tr {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: var(--space-4);
+        margin-bottom: var(--space-3);
+        box-shadow: var(--shadow-xs);
+    }
+
+    table td {
+        padding: 6px 0;
+        border-bottom: none;
+        font-size: 0.875rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-right: var(--space-3);
+        flex-shrink: 0;
+    }
+
+    table td:last-child {
+        border-bottom: none;
+        padding-top: 10px;
+    }
+
+    .cell-id {
+        font-variant-numeric: tabular-nums;
+    }
+
+    .cell-desc {
+        max-width: none;
+        overflow: visible;
+        text-overflow: clip;
+        white-space: normal;
+        line-height: 1.5;
+    }
+
+    .cell-date {
+        font-variant-numeric: tabular-nums;
+    }
+
+    .actions {
+        justify-content: flex-end;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 48px 24px;
     }
 
     .form-container {

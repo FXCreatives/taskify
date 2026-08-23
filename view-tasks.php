@@ -81,17 +81,17 @@ include 'includes/header.php';
                             }
                         }
 
-                        echo "<tr>";
-                        echo "<td class='cell-id'>#{$task['id']}</td>";
-                        echo "<td class='cell-title'>" . htmlspecialchars($task['title']) . "</td>";
-                        echo "<td class='cell-desc'>" . htmlspecialchars(substr($task['description'], 0, 50)) . (strlen($task['description']) > 50 ? '...' : '') . "</td>";
-                        echo "<td><span class='badge badge-" . strtolower($task['priority']) . "'>{$task['priority']}</span></td>";
-                        echo "<td class='cell-date $dueClass'>{$task['due_date']}</td>";
-                        echo "<td><span class='badge badge-" . strtolower(str_replace(' ', '-', $task['status'])) . "'>{$task['status']}</span></td>";
-                        echo "<td class='actions'>
-                                <a href='edit-task.php?id={$task['id']}' class='btn btn-ghost btn-sm'>Edit</a>
-                                <a href='delete-task.php?id={$task['id']}' class='btn btn-danger btn-sm btn-confirm-delete'>Delete</a>
-                              </td>";
+                        echo "<tr data-title=\"" . htmlspecialchars($task['title']) . "\" data-description=\"" . htmlspecialchars($task['description']) . "\" data-status=\"" . htmlspecialchars($task['status']) . "\">";
+                            echo "<td class='cell-id' data-label='ID'>#{$task['id']}</td>";
+                            echo "<td class='cell-title' data-label='Title'>" . htmlspecialchars($task['title']) . "</td>";
+                            echo "<td class='cell-desc' data-label='Description'>" . htmlspecialchars(substr($task['description'], 0, 50)) . (strlen($task['description']) > 50 ? '...' : '') . "</td>";
+                            echo "<td data-label='Priority'><span class='badge badge-" . strtolower($task['priority']) . "'>{$task['priority']}</span></td>";
+                            echo "<td class='cell-date $dueClass' data-label='Due Date'>{$task['due_date']}</td>";
+                            echo "<td data-label='Status'><span class='badge badge-" . strtolower(str_replace(' ', '-', $task['status'])) . "'>{$task['status']}</span></td>";
+                            echo "<td class='actions' data-label='Actions'>
+                                    <a href='edit-task.php?id={$task['id']}' class='btn btn-ghost btn-sm'>Edit</a>
+                                    <a href='delete-task.php?id={$task['id']}' class='btn btn-danger btn-sm btn-confirm-delete'>Delete</a>
+                                  </td>";
                         echo "</tr>";
                     }
                 } else {

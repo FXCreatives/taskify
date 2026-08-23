@@ -66,18 +66,27 @@ document.addEventListener('DOMContentLoaded', function () {
     const themeLabel = document.getElementById('themeLabel');
     const themeIcon = document.getElementById('themeIcon');
 
+    function getStoredTheme() {
+        return localStorage.getItem('taskify.theme') || localStorage.getItem('theme');
+    }
+
+    function setStoredTheme(value) {
+        localStorage.setItem('taskify.theme', value);
+        localStorage.removeItem('theme');
+    }
+
     function updateThemeLabel() {
         const isDark = document.body.classList.contains('dark-mode');
         if (themeLabel) themeLabel.textContent = isDark ? 'Light mode' : 'Dark mode';
         if (themeIcon) {
             themeIcon.innerHTML = isDark
                 ? '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>'
-                : '<path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>';
+                : '<path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9 0 0012 21a9.003 9 0 008.354-5.646z"/>';
         }
     }
 
     if (themeToggle) {
-        const savedTheme = localStorage.getItem('theme');
+        const savedTheme = getStoredTheme();
         if (savedTheme === 'dark') {
             document.body.classList.add('dark-mode');
         }
@@ -86,12 +95,11 @@ document.addEventListener('DOMContentLoaded', function () {
         themeToggle.addEventListener('click', function () {
             document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            setStoredTheme(isDark ? 'dark' : 'light');
             updateThemeLabel();
         });
     } else {
-        // Fallback if no toggle (e.g. delete page) — still respect saved theme
-        const savedTheme = localStorage.getItem('theme');
+        const savedTheme = getStoredTheme();
         if (savedTheme === 'dark') {
             document.body.classList.add('dark-mode');
         }
@@ -107,13 +115,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!taskTable) return;
         const searchTerm = (searchInput ? searchInput.value : '').toLowerCase();
         const filterValue = filterSelect ? filterSelect.value : 'all';
-        const rows = taskTable.querySelectorAll('tbody tr');
+        const rows = taskTable.querySelectorAll('tbody tr[data-title]');
 
         rows.forEach(row => {
-            if (row.querySelector('.empty-state')) return;
-            const title = (row.cells[1] ? row.cells[1].textContent : '').toLowerCase();
-            const description = (row.cells[2] ? row.cells[2].textContent : '').toLowerCase();
-            const status = row.cells[5] ? row.cells[5].textContent.trim() : '';
+            const title = (row.dataset.title || '').toLowerCase();
+            const description = (row.dataset.description || '').toLowerCase();
+            const status = (row.dataset.status || '').trim();
 
             const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
             const matchesFilter = filterValue === 'all' || status === filterValue;
