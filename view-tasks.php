@@ -4,6 +4,7 @@ include 'includes/db.php';
 
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
+$priority = isset($_GET['priority']) ? $_GET['priority'] : 'all';
 
 $query = "SELECT * FROM tasks WHERE 1=1";
 $params = [];
@@ -17,6 +18,11 @@ if (!empty($search)) {
 if ($filter !== 'all') {
     $query .= " AND status = ?";
     $params[] = $filter;
+}
+
+if ($priority !== 'all') {
+    $query .= " AND priority = ?";
+    $params[] = $priority;
 }
 
 $query .= " ORDER BY created_at DESC";
@@ -38,7 +44,9 @@ include 'includes/header.php';
 
 <div class="panel">
     <div class="panel-header">
-        <div class="panel-title">Tasks <span class="count"><?php echo count($tasks); ?> total</span></div>
+        <div class="panel-title-group">
+            <div class="panel-title">Tasks <span class="count"><?php echo count($tasks); ?> total</span></div>
+        </div>
         <div class="toolbar-actions">
             <form method="GET" action="" id="filterForm" style="display:flex;gap:8px;flex-wrap:wrap;">
                 <div class="search-wrapper">
@@ -46,10 +54,16 @@ include 'includes/header.php';
                     <input type="text" id="searchInput" name="search" class="search-input" placeholder="Search tasks..." value="<?php echo htmlspecialchars($search); ?>">
                 </div>
                 <select id="filterSelect" name="filter" class="filter-select">
-                    <option value="all" <?php echo $filter === 'all' ? 'selected' : ''; ?>>All Statuses</option>
+                    <option value="all" <?php echo $filter === 'all' ? 'selected' : ''; ?>>All Status</option>
                     <option value="Pending" <?php echo $filter === 'Pending' ? 'selected' : ''; ?>>Pending</option>
                     <option value="In Progress" <?php echo $filter === 'In Progress' ? 'selected' : ''; ?>>In Progress</option>
                     <option value="Completed" <?php echo $filter === 'Completed' ? 'selected' : ''; ?>>Completed</option>
+                </select>
+                <select id="priorityFilter" name="priority" class="filter-select">
+                    <option value="all" <?php echo $priority === 'all' ? 'selected' : ''; ?>>All Priority</option>
+                    <option value="Low" <?php echo $priority === 'Low' ? 'selected' : ''; ?>>Low</option>
+                    <option value="Medium" <?php echo $priority === 'Medium' ? 'selected' : ''; ?>>Medium</option>
+                    <option value="High" <?php echo $priority === 'High' ? 'selected' : ''; ?>>High</option>
                 </select>
             </form>
         </div>
@@ -80,7 +94,7 @@ include 'includes/header.php';
                             }
                         }
 
-                        echo "<tr data-title=\"" . htmlspecialchars($task['title']) . "\" data-description=\"" . htmlspecialchars($task['description']) . "\" data-status=\"" . htmlspecialchars($task['status']) . "\">";
+                        echo "<tr data-title=\"" . htmlspecialchars($task['title']) . "\" data-description=\"" . htmlspecialchars($task['description']) . "\" data-status=\"" . htmlspecialchars($task['status']) . "\" data-priority=\"" . htmlspecialchars($task['priority']) . "\">";
                             echo "<td class='cell-title' data-label='Task'>" . htmlspecialchars($task['title']) . "</td>";
                             echo "<td class='cell-desc hidden lg:table-cell' data-label='Description'>" . htmlspecialchars(substr($task['description'], 0, 50)) . (strlen($task['description']) > 50 ? '...' : '') . "</td>";
                             echo "<td data-label='Priority'><span class='badge badge-" . strtolower($task['priority']) . "'>{$task['priority']}</span></td>";
@@ -94,15 +108,15 @@ include 'includes/header.php';
                                         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2'><path stroke-linecap='round' stroke-linejoin='round' d='M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.061-.94-1.75-1.816-1.618l-3.04.397a1.125 1.125 0 01-1.064-1.064l.397-3.04c.132-.875.557-1.618 1.618-1.816z'/></svg>
                                     </a>
                                   </td>";
-                        echo "</tr>";
-                    }
+                            echo "</tr>";
+                        }
                 } else {
                     echo "<tr><td colspan='6' class='empty-state'>
                             <div class='empty-state-icon-container'>
                                 <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='1.5'><path stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'/></svg>
                             </div>
-                            <div class='empty-state-title'>No tasks found</div>
-                            <p class='empty-state-text'>Adjust your search or add a new task</p>
+                            <div class='empty-state-title'>No matching tasks.</div>
+                            <p class='empty-state-text'>Try a different search term or add a new task</p>
                             <a href='add-task.php' class='btn btn-primary'>Add your first task</a>
                           </td></tr>";
                 }

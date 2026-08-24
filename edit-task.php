@@ -47,7 +47,7 @@ include 'includes/header.php';
 <div class="page-header">
     <div>
         <h1 class="page-title">Edit Task</h1>
-        <p class="page-subtitle">Update task details and status</p>
+        <p class="page-subtitle">Update the work, its priority, and its deadline.</p>
     </div>
 </div>
 
@@ -98,7 +98,7 @@ include 'includes/header.php';
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Update Task</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
             <a href="view-tasks.php" class="btn btn-ghost">Cancel</a>
         </div>
     </form>

@@ -29,8 +29,8 @@ include 'includes/header.php';
 
 <div class="page-header">
     <div>
-        <h1 class="page-title">Add New Task</h1>
-        <p class="page-subtitle">Create a new task to track</p>
+        <h1 class="page-title">Add Task</h1>
+        <p class="page-subtitle">Capture the work, set a priority, and give it a deadline.</p>
     </div>
 </div>
 
@@ -41,13 +41,13 @@ include 'includes/header.php';
     <form method="POST" action="">
         <div class="form-group">
             <label for="title">Task Title <span class="required">*</span></label>
-            <input type="text" id="title" name="title" placeholder="e.g. Prepare quarterly report" required>
+            <input type="text" id="title" name="title" placeholder="e.g. Prepare weekly status report" required>
             <p class="form-hint">Keep it short and action oriented.</p>
         </div>
 
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea id="description" name="description" placeholder="Add details about this task (optional)"></textarea>
+            <textarea id="description" name="description" placeholder="Add any context, links or acceptance criteria…"></textarea>
             <p class="form-hint">Optional. Supports plain text.</p>
         </div>
 
@@ -68,7 +68,7 @@ include 'includes/header.php';
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Save Task</button>
+            <button type="submit" class="btn btn-primary">Create Task</button>
             <a href="view-tasks.php" class="btn btn-ghost">Cancel</a>
         </div>
     </form>

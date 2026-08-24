@@ -2,18 +2,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const sidebar = document.getElementById('sidebar');
     const sidebarOverlay = document.getElementById('sidebarOverlay');
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
 
     // ---------- Mobile sidebar toggle ----------
     function openSidebar() {
         if (!sidebar) return;
         sidebar.classList.add('open');
         if (sidebarOverlay) sidebarOverlay.classList.add('show');
+        if (mobileCloseBtn) mobileCloseBtn.style.display = 'inline-flex';
     }
 
     function closeSidebar() {
         if (!sidebar) return;
         sidebar.classList.remove('open');
         if (sidebarOverlay) sidebarOverlay.classList.remove('show');
+        if (mobileCloseBtn) mobileCloseBtn.style.display = 'none';
     }
 
     if (mobileMenuBtn) {
@@ -24,6 +29,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 openSidebar();
             }
         });
+    }
+
+    if (mobileCloseBtn) {
+        mobileCloseBtn.addEventListener('click', closeSidebar);
     }
 
     if (sidebarOverlay) {
@@ -62,60 +71,53 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // ---------- Theme toggle ----------
-    const themeToggle = document.getElementById('themeToggle');
-
-    function getStoredTheme() {
-        return localStorage.getItem('taskify.theme') || localStorage.getItem('theme');
-    }
-
-    function setStoredTheme(value) {
-        localStorage.setItem('taskify.theme', value);
-        localStorage.removeItem('theme');
-    }
-
-    if (themeToggle) {
-        const savedTheme = getStoredTheme();
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-        }
-
-        themeToggle.addEventListener('click', function () {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-            setStoredTheme(isDark ? 'dark' : 'light');
-        });
-    } else {
-        const savedTheme = getStoredTheme();
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-mode');
+    function updateThemeIcon() {
+        if (!themeIcon) return;
+        const isDark = document.documentElement.classList.contains('dark');
+        if (isDark) {
+            themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+        } else {
+            themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>';
         }
     }
+
+    updateThemeIcon();
+    if (themeToggle) themeToggle.addEventListener('click', function () {
+        document.documentElement.classList.toggle('dark');
+        localStorage.setItem('taskify.theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        updateThemeIcon();
+    });
 
     // ---------- Task filtering (client-side, view-tasks page) ----------
     const filterForm = document.getElementById('filterForm');
     const filterSelect = document.getElementById('filterSelect');
     const searchInput = document.getElementById('searchInput');
     const taskTable = document.getElementById('taskTable');
+    const priorityFilter = document.getElementById('priorityFilter');
 
     function filterTasks() {
         if (!taskTable) return;
         const searchTerm = (searchInput ? searchInput.value : '').toLowerCase();
         const filterValue = filterSelect ? filterSelect.value : 'all';
+        const priorityValue = priorityFilter ? priorityFilter.value : 'all';
         const rows = taskTable.querySelectorAll('tbody tr[data-title]');
 
         rows.forEach(row => {
             const title = (row.dataset.title || '').toLowerCase();
             const description = (row.dataset.description || '').toLowerCase();
             const status = (row.dataset.status || '').trim();
+            const priority = (row.dataset.priority || '').trim();
 
             const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
             const matchesFilter = filterValue === 'all' || status === filterValue;
+            const matchesPriority = priorityValue === 'all' || priority === priorityValue;
 
-            row.style.display = matchesSearch && matchesFilter ? '' : 'none';
+            row.style.display = matchesSearch && matchesFilter && matchesPriority ? '' : 'none';
         });
     }
 
     if (searchInput) searchInput.addEventListener('input', filterTasks);
     if (filterSelect) filterSelect.addEventListener('change', filterTasks);
+    if (priorityFilter) priorityFilter.addEventListener('change', filterTasks);
     if (searchInput || filterSelect) filterTasks();
 });

@@ -8,8 +8,19 @@ include 'includes/header.php';
 
 <div class="page-header">
     <div>
-        <h1 class="page-title">Dashboard</h1>
-        <p class="page-subtitle">Track and manage your tasks efficiently</p>
+        <h1 class="page-title"><?php
+            $h = date('H');
+            if ($h < 12) echo "Good morning, let's get things done.";
+            elseif ($h < 18) echo "Good afternoon, let's get things done.";
+            else echo "Good evening, let's get things done.";
+        ?></h1>
+        <p class="page-subtitle">Track your tasks, stay organized, and keep making progress.</p>
+    </div>
+    <div class="page-header-action">
+        <a href="add-task.php" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+            New Task
+        </a>
     </div>
 </div>
 
@@ -23,49 +34,53 @@ $inProgress = $pdo->query("SELECT COUNT(*) FROM tasks WHERE status = 'In Progres
 ?>
 
 <div class="cards">
-    <div class="stat-card primary">
+    <div class="stat-card">
         <div class="stat-card-top">
             <div>
                 <div class="stat-card-label">Total Tasks</div>
-                <div class="stat-card-value"><?php echo $total; ?></div>
             </div>
             <div class="stat-card-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
             </div>
         </div>
+        <div class="stat-card-value"><?php echo $total; ?></div>
+        <div class="stat-card-trend">Across your workspace</div>
     </div>
     <div class="stat-card success">
         <div class="stat-card-top">
             <div>
                 <div class="stat-card-label">Completed</div>
-                <div class="stat-card-value"><?php echo $completed; ?></div>
             </div>
             <div class="stat-card-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
         </div>
+        <div class="stat-card-value"><?php echo $completed; ?></div>
+        <div class="stat-card-trend"><?php echo $progress; ?>% of all tasks</div>
     </div>
     <div class="stat-card warning">
         <div class="stat-card-top">
             <div>
                 <div class="stat-card-label">Pending</div>
-                <div class="stat-card-value"><?php echo $pending; ?></div>
             </div>
             <div class="stat-card-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
         </div>
+        <div class="stat-card-value"><?php echo $pending; ?></div>
+        <div class="stat-card-trend"><?php echo $inProgress; ?> in progress</div>
     </div>
     <div class="stat-card danger">
         <div class="stat-card-top">
             <div>
                 <div class="stat-card-label">High Priority</div>
-                <div class="stat-card-value"><?php echo $highPriority; ?></div>
             </div>
             <div class="stat-card-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
             </div>
         </div>
+        <div class="stat-card-value"><?php echo $highPriority; ?></div>
+        <div class="stat-card-trend">Open and urgent</div>
     </div>
 </div>
 
@@ -74,7 +89,7 @@ $inProgress = $pdo->query("SELECT COUNT(*) FROM tasks WHERE status = 'In Progres
         <div class="progress-title-group">
             <div>
                 <div class="progress-title">Overall Progress</div>
-                <div class="progress-subtitle"><?php echo $completed; ?> of <?php echo $total; ?> tasks completed</div>
+                <div class="progress-subtitle">Completion across all tasks</div>
             </div>
         </div>
         <div class="progress-percentage"><?php echo $progress; ?>%</div>
@@ -84,17 +99,17 @@ $inProgress = $pdo->query("SELECT COUNT(*) FROM tasks WHERE status = 'In Progres
     </div>
     <div class="progress-stats">
         <div class="progress-stat">
-            <span class="progress-stat-dot done"></span>
+            <span class="progress-stat-dot" style="background:var(--success);"></span>
             <span class="progress-stat-label">Completed</span>
             <span class="progress-stat-value"><?php echo $completed; ?></span>
         </div>
         <div class="progress-stat">
-            <span class="progress-stat-dot pending"></span>
+            <span class="progress-stat-dot" style="background:var(--primary);"></span>
             <span class="progress-stat-label">In Progress</span>
             <span class="progress-stat-value"><?php echo $inProgress; ?></span>
         </div>
         <div class="progress-stat">
-            <span class="progress-stat-dot pending"></span>
+            <span class="progress-stat-dot" style="background:var(--warning);"></span>
             <span class="progress-stat-label">Pending</span>
             <span class="progress-stat-value"><?php echo $pending; ?></span>
         </div>
@@ -103,11 +118,13 @@ $inProgress = $pdo->query("SELECT COUNT(*) FROM tasks WHERE status = 'In Progres
 
 <div class="panel">
     <div class="panel-header">
-        <div class="panel-title">Recent Tasks <span class="count">Last 10</span></div>
-        <div class="toolbar-actions">
-            <a href="add-task.php" class="btn btn-primary btn-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-                Add New Task
+        <div class="panel-title-group">
+            <div class="panel-title">Recent Tasks</div>
+            <div class="panel-subtitle">Your five most recently created tasks</div>
+        </div>
+        <div class="panel-action">
+            <a href="view-tasks.php" class="panel-link">View All Tasks
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
         </div>
     </div>
@@ -124,7 +141,7 @@ $inProgress = $pdo->query("SELECT COUNT(*) FROM tasks WHERE status = 'In Progres
             </thead>
             <tbody>
                 <?php
-                $stmt = $pdo->query("SELECT * FROM tasks ORDER BY created_at DESC LIMIT 10");
+                $stmt = $pdo->query("SELECT * FROM tasks ORDER BY created_at DESC LIMIT 5");
                 $tasks = $stmt->fetchAll();
                     if (count($tasks) > 0) {
                         foreach ($tasks as $task) {
